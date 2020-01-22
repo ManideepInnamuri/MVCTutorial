@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace VidlyAPI
 {
@@ -11,6 +12,8 @@ namespace VidlyAPI
     {
         public static void Register(HttpConfiguration config)
         {
+            config.EnableCors();
+            var cors = new EnableCorsAttribute("*", "*", "*");
             // Web API configuration and services
             config.MapHttpAttributeRoutes();
             var settings = config.Formatters.JsonFormatter.SerializerSettings;
