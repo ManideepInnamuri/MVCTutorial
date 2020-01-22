@@ -1,0 +1,37 @@
+﻿@model VidlyAPI.ViewModels.CustomerFormViewModel
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Customer</h2>
+@using (Html.BeginForm("Save", "Customers"))
+{
+    <div class="form-group">
+        @Html.LabelFor(p => p.Customer.Name)
+        @Html.TextBoxFor(p => p.Customer.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Customer.MembershipTypeId)
+        @Html.DropDownListFor(p => p.Customer.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Membership"), "Select Membership Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(p => p.Customer.MembershipTypeId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Customer.DateofBirth)
+        @Html.TextBoxFor(p => p.Customer.DateofBirth, "{0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(p => p.Customer.DateofBirth)
+    </div>
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(p => p.Customer.IsSubscribedToNewsLetter) Subscribed To News Letter?
+        </label>
+    </div>
+    @Html.HiddenFor(p => p.Customer.Id)
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+@section scripts
+{
+@Scripts.Render("~/bundles/jqueryval")
+}

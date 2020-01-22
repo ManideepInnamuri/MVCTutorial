@@ -1,0 +1,42 @@
+﻿@model VidlyAPI.ViewModels.RandomMovieViewModel
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (Model.Movie.Id == 0)
+{
+    <h2>New Movie</h2>
+}
+else
+{
+    <h2>Edit Movie</h2>
+
+}
+@using (Html.BeginForm("Save", "Movies"))
+{
+    <div class="form-group">
+        @Html.LabelFor(p => p.Movie.Name)
+        @Html.TextBoxFor(p => p.Movie.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(p=>p.Movie.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Movie.ReleaseDate)
+        @Html.TextBoxFor(p => p.Movie.ReleaseDate, "{0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(p => p.Movie.ReleaseDate)
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Movie.GenereId)
+        @Html.DropDownListFor(p => p.Movie.GenereId, new SelectList(Model.Generes, "Id", "Name"), "Select Genere", new { @class = "form-control" })
+        @Html.ValidationMessageFor(p => p.Movie.GenereId)
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Movie.NumberinStock)
+        @Html.TextBoxFor(p => p.Movie.NumberinStock, new { @class = "form-control" })
+        @Html.ValidationMessageFor(p => p.Movie.NumberinStock)
+    </div>
+    @Html.HiddenFor(p => p.Movie.Id)
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
