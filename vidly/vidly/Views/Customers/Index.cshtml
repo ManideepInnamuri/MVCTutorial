@@ -20,12 +20,12 @@
     <tbody>
         @foreach (var customer in Model)
         {
-        <tr>
-            <td>@Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id }, htmlAttributes: null)</td>
-            <td>@customer.MembershipType.Membership</td>
-            <td>@customer.MembershipType.DiscountRate%</td>
-            <td><button data-customer-id="@customer.Id" class="btn btn-warning js-delete">Delete</button></td>            
-        </tr>
+            <tr>
+                <td>@Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id }, htmlAttributes: null)</td>
+                <td>@customer.MembershipType.Membership</td>
+                <td>@customer.MembershipType.DiscountRate%</td>
+                <td><button data-customer-id="@customer.Id" class="btn btn-warning js-delete">Delete</button></td>
+            </tr>
         }
     </tbody>
 </table>
@@ -33,21 +33,40 @@
 @section scripts{
     <script>
         $(document).ready(function () {
-           
-            $("#customers .js-delete").on("click", function () {
+            $("#customers").on("click", ".js-delete",function () {
                 var button = $(this);
                 var apiUrl = '@System.Web.Configuration.WebConfigurationManager.AppSettings["MoviesAPI"]/api/customers/' + button.attr("data-customer-id")
-                if (confirm("Are you sure you want to delete this Customer")){
+                bootbox.confirm("Are you sure you want to delete this Customer?", function () {
+                if (result) {
                     $.ajax({
                         url: apiUrl,
                         method: "DELETE",
                         success: function () {
                             button.parents("tr").remove();
-                            console.log("Success");
                         }
                     });
                 }
+                });
             });
+
+
+
+
+            @*$("#customers .js-delete").on("click", function () {
+                var button = $(this);
+                var apiUrl = '@System.Web.Configuration.WebConfigurationManager.AppSettings["MoviesAPI"]/api/customers/' + button.attr("data-customer-id")
+                bootbox.confirm("Are you sure you want to delete this Customer?", function () {
+                    if (result) {
+                        $.ajax({
+                            url: apiUrl,
+                            method: "DELETE",
+                            success: function () {
+                                button.parents("tr").remove();
+                            }
+                        });
+                    }
+                });
+            });*@
         });
     </script>
 }
