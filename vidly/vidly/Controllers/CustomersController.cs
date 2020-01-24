@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using VidlyAPI.ViewModels;
 using VidlyAPI.Models;
+using System.IO;
 
 namespace vidly.Controllers
 {
@@ -41,12 +42,15 @@ namespace vidly.Controllers
         [HttpPost]
         public ActionResult Save(Customer customer)
         {
+            customer.DocumentFile.SaveAs(Server.MapPath(Path.Combine(@"~\content\Images", customer.DocumentFile.FileName)));
+            customer.ImagePath = Path.Combine(@"\content\Images", customer.DocumentFile.FileName);
             if (!ModelState.IsValid)
             {
                 return View("CustomerForm", new CustomerFormViewModel() { Customer = customer, MembershipTypes = _context.MembershipTypes.ToList() });
             }
-            if (customer.Id == 0)
+            if (customer.Id == 0) {
                 _context.Customers.Add(customer);
+            }
             else
             {
                 var customerInDB = _context.Customers.SingleOrDefault(c => c.Id == customer.Id);
@@ -54,6 +58,7 @@ namespace vidly.Controllers
                 customerInDB.DateofBirth = customer.DateofBirth;
                 customerInDB.MembershipTypeId = customer.MembershipTypeId;
                 customerInDB.IsSubscribedToNewsLetter = customer.IsSubscribedToNewsLetter;
+                customerInDB.ImagePath = customer.ImagePath;
             }
             _context.SaveChanges();
             return RedirectToAction("Index", "Customers");

@@ -28,3 +28,13 @@ color:red;
 .input-validation-error {
 border:2px solid red;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}
+.popover{
+/*width:5%;*/
+}
+.popover-content {
+    height:20%;width:20%;
+}

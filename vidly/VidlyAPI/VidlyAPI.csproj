@@ -193,6 +193,10 @@
     <Compile Include="Migrations\202001220437248_Data.Designer.cs">
       <DependentUpon>202001220437248_Data.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001231007449_CustomerImage.cs" />
+    <Compile Include="Migrations\202001231007449_CustomerImage.Designer.cs">
+      <DependentUpon>202001231007449_CustomerImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Genere.cs" />
@@ -297,6 +301,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001220437248_Data.resx">
       <DependentUpon>202001220437248_Data.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001231007449_CustomerImage.resx">
+      <DependentUpon>202001231007449_CustomerImage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

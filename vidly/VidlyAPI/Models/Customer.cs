@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -24,5 +25,8 @@ namespace VidlyAPI.Models
         public MembershipType MembershipType { get; set; }
         [Display(Name = "Membership Type")]
         public int MembershipTypeId { get; set; }
+        public string ImagePath { get; set; }
+        [NotMapped()]
+        public HttpPostedFileBase DocumentFile { get; set; }
     }
 }
