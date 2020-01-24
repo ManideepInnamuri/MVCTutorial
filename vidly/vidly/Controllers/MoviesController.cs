@@ -2,17 +2,18 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Data.Entity;
-using VidlyAPI.Models;
-using VidlyAPI.ViewModels;
+using vidly.Models;
+using Common.ViewModels;
+using Common.Models;
 
 namespace vidly.Controllers
 {
     public class MoviesController : Controller
     {
-        private ApplicationDbContext _context = null;
+        private MovieDBContext _context = null;
         public MoviesController()
         {
-            _context = new ApplicationDbContext();
+            _context = new MovieDBContext();
         }
         // GET: Movies.Random
         public ActionResult Random()

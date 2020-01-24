@@ -1,18 +1,20 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using System.Data.Entity;
-using VidlyAPI.ViewModels;
-using VidlyAPI.Models;
 using System.IO;
+using vidly.Models;
+using Common.Models;
+using Common.ViewModels;
 
 namespace vidly.Controllers
 {
+    [Authorize]
     public class CustomersController : Controller
     {
-        private ApplicationDbContext _context;
+        private MovieDBContext _context;
         public CustomersController()
         {
-            _context = new ApplicationDbContext();
+            _context = new MovieDBContext();
         }
         protected override void Dispose(bool disposing)
         {
@@ -42,13 +44,17 @@ namespace vidly.Controllers
         [HttpPost]
         public ActionResult Save(Customer customer)
         {
-            customer.DocumentFile.SaveAs(Server.MapPath(Path.Combine(@"~\content\Images", customer.DocumentFile.FileName)));
-            customer.ImagePath = Path.Combine(@"\content\Images", customer.DocumentFile.FileName);
+            if (customer.DocumentFile != null)
+            {
+                customer.DocumentFile.SaveAs(Server.MapPath(Path.Combine(@"~\content\Images", customer.DocumentFile.FileName)));
+                customer.ImagePath = Path.Combine(@"\content\Images", customer.DocumentFile.FileName);
+            }
             if (!ModelState.IsValid)
             {
                 return View("CustomerForm", new CustomerFormViewModel() { Customer = customer, MembershipTypes = _context.MembershipTypes.ToList() });
             }
-            if (customer.Id == 0) {
+            if (customer.Id == 0)
+            {
                 _context.Customers.Add(customer);
             }
             else
